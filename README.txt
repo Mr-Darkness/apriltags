@@ -18,7 +18,7 @@ Uses the pods build system in connection with cmake, see:
 http://sourceforge.net/p/pods/
 
 Michael Kaess
-October 2012
+October 2012 
 
 ----------------------------
 
@@ -60,3 +60,4 @@ todo:
 - replacing arctan2 by precomputed lookup table
 - converting matrix operations to Eigen (mostly for simplifying code,
   maybe some speedup)
+-----------------------------
