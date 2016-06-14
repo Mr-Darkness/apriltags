@@ -33,3 +33,4 @@ pods_install_pkg_config_file(apriltags
     VERSION 1.0.0)
 
 add_subdirectory(example)
+ 
