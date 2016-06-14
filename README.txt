@@ -61,3 +61,28 @@ todo:
 - converting matrix operations to Eigen (mostly for simplifying code,
   maybe some speedup)
 -----------------------------
+						apriltags install
+***********************************************************************
+AprilTags are 2D barcodes developed for robotics applications by Ed Olson. 
+The library detects any April tags in a given image, provides the unique 
+ID of the tag as well as its location in the image. If the camera is calibrated
+ and the physical size of the tag known, also provides the relative transform 
+ between tag and camera.
+
+----------------------environment : Ubuntu 14.04 ros-------------------
+(1)Ubuntu dependencies:
+	sudo apt-get install subversion cmake libopencv-dev libeigen3-dev libv4l-dev
+(2)source:
+	svn co https://svn.csail.mit.edu/apriltags
+(3)compile:
+	cd apriltags
+	make
+(4)after compiling, run the example program which detects AprilTags visible
+   in laptop or webcam images and marks any tags in the live image.
+	./build/bin/apriltags_demo
+
+需要根据标定相机和tag尺寸修改程序（examples/apriltags_demo.cpp）里的参数.
+
+参考网址：
+http://wiki.tekkotsu.org/index.php/AprilTags
+http://people.csail.mit.edu/kaess/apriltags/
