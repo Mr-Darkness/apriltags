@@ -77,7 +77,7 @@ bool TagDetection::overlapsTooMuch(const TagDetection &other) const {
   return ( dist < radius );
 }
 
-Eigen::Matrix4d TagDetection::getRelativeTransform(double tag_size, double fx, double fy, double px, double py) const {
+Eigen::Matrix4d TagDetection::getRelative_Tag_in_Camera(double tag_size, double fx, double fy, double px, double py) const {
   std::vector<cv::Point3f> objPts;
   std::vector<cv::Point2f> imgPts;
   double s = tag_size/2.;
@@ -115,26 +115,32 @@ Eigen::Matrix4d TagDetection::getRelativeTransform(double tag_size, double fx, d
   return T;
 }
 
-void TagDetection::getRelativeTranslationRotation(double tag_size, double fx, double fy, double px, double py,
-                                                  Eigen::Vector3d& trans, Eigen::Matrix3d& rot) const {
-  Eigen::Matrix4d T =
-    getRelativeTransform(tag_size, fx, fy, px, py);
+Eigen::Matrix4d TagDetection::getRelative_Camera_in_Tag(double tag_size, double fx, double fy, double px, double py ) const {
+  Eigen::Matrix4d T = getRelative_Tag_in_Camera(tag_size, fx, fy, px, py);
+
+  Eigen::Matrix4d H;
+  H.topLeftCorner(3,3) = T.block(0,0,3,3).transpose();;
+  H.col(3).head(3) = -T.block(0,0,3,3).transpose() * T.col(3).head(3);
+  H.row(3) << 0,0,0,1;
+
+  return H;
 
   // converting from camera frame (z forward, x right, y down) to
-  // object frame (x forward, y left, z up)
-  Eigen::Matrix4d M;
-  
+  // object frame (z forward, x right, y up)
   /*
-  M <<
+    M <<
     0,  0, 1, 0,
     -1, 0, 0, 0,
     0, -1, 0, 0,
     0,  0, 0, 1;
   */
+  
+  /*
+  Eigen::Matrix4d M;
   M <<
-    0,  0, 1, 0,
-    1, 0, 0, 0,
+    -1,  0, 0, 0,
     0, -1, 0, 0,
+    0, 0, 1, 0,
     0,  0, 0, 1;
 
   Eigen::Matrix4d MT = M*T;
@@ -144,6 +150,7 @@ void TagDetection::getRelativeTranslationRotation(double tag_size, double fx, do
   // convention makes more sense here, because yaw,pitch,roll then
   // naturally agree with the orientation of the object
   rot = T.block(0,0,3,3);
+  */
 }
 
 // draw one April tag detection on actual image

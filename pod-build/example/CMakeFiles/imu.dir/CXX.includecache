@@ -26,15 +26,3 @@ Serial.h
 string
 -
 
-/home/exbot/apriltags/example/imu.cpp
-iostream
--
-string
--
-stdio.h
--
-math.h
--
-Serial.h
-/home/exbot/apriltags/example/Serial.h
-

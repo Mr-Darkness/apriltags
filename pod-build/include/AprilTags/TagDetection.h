@@ -84,13 +84,13 @@ struct TagDetection {
      calibration (focal length and principal point); Result is in
      camera frame (z forward, x right, y down)
   */
-  Eigen::Matrix4d getRelativeTransform(double tag_size, double fx, double fy,
+  Eigen::Matrix4d getRelative_Tag_in_Camera(double tag_size, double fx, double fy,
                                        double px, double py) const;
 
   //! Recover rotation matrix and translation vector of April tag relative to camera.
   // Result is in object frame (x forward, y left, z up)
-  void getRelativeTranslationRotation(double tag_size, double fx, double fy, double px, double py,
-                                      Eigen::Vector3d& trans, Eigen::Matrix3d& rot) const;
+  Eigen::Matrix4d getRelative_Camera_in_Tag(double tag_size, double fx, double fy, 
+                                      double px, double py) const;
 
   //! Draw the detection within the supplied image, including boarders and tag ID.
   void draw(cv::Mat& image) const;

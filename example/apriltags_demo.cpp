@@ -350,6 +350,7 @@ public:
 
   }
 
+  /*
   void print_detection(AprilTags::TagDetection& detection) const {
     cout << "  Id: " << detection.id
          << " (Hamming: " << detection.hammingDistance << ")";
@@ -391,38 +392,26 @@ public:
     // this relative pose is very non-Gaussian; see iSAM source code
     // for suitable factors.
   }
-
+*/
   void print_relation(vector<AprilTags::TagDetection> detections)
   {
       Eigen::Matrix4d H0;
-      //vector <AprilTags::TagDetection>::iterator Iter;
+
       for (int i=0; i<detections.size(); i++) {
         if(detections[i].id == 0)
         {
-            Eigen::Vector3d translation;
-            Eigen::Matrix3d rotation;
-            detections[i].getRelativeTransform(m_tagSize, m_fx, m_fy, m_px, m_py,
-                                                     translation, rotation);
-            H0.topLeftCorner(3,3) = rotation;
-            H0.col(3).head(3) = translation;
-            H0.row(3) << 0,0,0,1;
+            H0 = detections[i].getRelative_Camera_in_Tag(m_tagSize, m_fx, m_fy, m_px, m_py);
             cout<<"id= "<<detections[i].id <<" H="<<endl<<H0<<endl;
         }
       }
-      /*
+
       for (int i=0; i<detections.size(); i++) {
           Eigen::Matrix4d Hi;
-          Eigen::Vector3d translation;
-          Eigen::Matrix3d rotation;
-          Hi=detections[i].getRelativeTransform(m_tagSize, m_fx, m_fy, m_px, m_py);
-          //                                         translation, rotation);
-          rotation = Hi.topLeftCorner(3,3);
-          translation = Hi.col(3).head(3);
-          Hi.topLeftCorner(3,3) =rotation.transpose();
-          Hi.col(3).head(3) = -rotation.transpose() * translation;
-          Hi.row(3) << 0,0,0,1;
-          cout<<"H"<<detections[i].id<<" in H0 "<<endl<<H0*Hi<<endl;
-      }*/
+          Hi = detections[i].getRelative_Tag_in_Camera(m_tagSize, m_fx, m_fy, m_px, m_py);
+          Eigen::Matrix4d H0i = H0*Hi;
+          cout<<"H"<<detections[i].id<<" in H0 "<<endl<<H0i<<endl;
+      }
+
   }
 
   void processImage(cv::Mat& image, cv::Mat& image_gray) {
@@ -446,7 +435,7 @@ public:
 
     // print out each detection
     cout << detections.size() << " tags detected:" << endl;
-    /*
+/*
     for (int i=0; i<detections.size(); i++) {
       print_detection(detections[i]);
     }
@@ -463,6 +452,7 @@ public:
     }
 
     // optionally send tag information to serial port (e.g. to Arduino)
+    /*
     if (m_arduino) {
       if (detections.size() > 0) {
         // only the first detected tag is sent out for now
@@ -483,6 +473,7 @@ public:
         m_serial.print("-1,0.0,0.0,0.0\n");
       }
     }
+    */
   }
 
   // Load and process a single image

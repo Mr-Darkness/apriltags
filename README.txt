@@ -1,4 +1,4 @@
-AprilTags library
+锘緼prilTags library
 
 Detect April tags (2D bar codes) in images; reports unique ID of each
 detection, and optionally its position and orientation relative to a
@@ -80,8 +80,11 @@ between tag and camera.
    in laptop or webcam images and marks any tags in the live image.
 	./build/bin/apriltags_demo
 
-需要根据标定相机和tag尺寸修改程序（examples/apriltags_demo.cpp）里的参数.
+  -----camera coordinate (z forward, x right, y down) 
+  -----object coordinate (z forward, x right, y up)
 
-参考网址：
+脨猫脪陋赂霉戮脻卤锚露篓脧脿禄煤潞脥tag鲁脽麓莽脨脼赂脛鲁脤脨貌拢篓examples/apriltags_demo.cpp拢漏脌茂碌脛虏脦脢媒.
+
+虏脦驴录脥酶脰路拢潞
 http://wiki.tekkotsu.org/index.php/AprilTags
 http://people.csail.mit.edu/kaess/apriltags/
