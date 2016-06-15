@@ -81,7 +81,7 @@ between tag and camera.
 	./build/bin/apriltags_demo
 
   -----camera coordinate (z forward, x right, y down) 
-  -----object coordinate (z forward, x right, y up)
+  -----object coordinate (z forward, x left, y up)
 
 ÐèÒª¸ù¾Ý±ê¶¨Ïà»úºÍtag³ß´çÐÞ¸Ä³ÌÐò£¨examples/apriltags_demo.cpp£©ÀïµÄ²ÎÊý.
 
