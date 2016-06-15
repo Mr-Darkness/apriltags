@@ -12,7 +12,7 @@
  * option to send tag detections via a serial port, for example when
  * running on a Raspberry Pi that is connected to an Arduino.
  */
-
+ 
 using namespace std;
 
 #include <iostream>
