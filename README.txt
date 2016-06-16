@@ -1,4 +1,30 @@
-﻿AprilTags library
+﻿----------------environment : Ubuntu 14.04 --------------
+AprilTags are 2D barcodes developed for robotics applications by Ed Olson. 
+The library detects any April tags in a given image, provides the unique 
+ID of the tag as well as its location in the image. If the camera is calibrated
+and the physical size of the tag known, also provides the relative transform 
+between tag and camera.
+ 
+(1)Ubuntu dependencies:
+	sudo apt-get install subversion cmake libopencv-dev libeigen3-dev libv4l-dev
+(2)source:
+	git clone https://github.com/TianyeAlex/apriltags.git
+(3)compile:
+	cd apriltags
+	make
+(4)after compiling, run the example program which detects AprilTags visible
+   in laptop or webcam images and marks any tags in the live image.
+	./build/bin/apriltags_demo
+
+  -----camera coordinate (z forward, x right, y down) 
+  -----object coordinate (z forward, x left, y up)
+
+web references:
+http://wiki.tekkotsu.org/index.php/AprilTags
+http://people.csail.mit.edu/kaess/apriltags/
+
+---------------------------------------------------------
+AprilTags library
 
 Detect April tags (2D bar codes) in images; reports unique ID of each
 detection, and optionally its position and orientation relative to a
@@ -20,7 +46,7 @@ http://sourceforge.net/p/pods/
 Michael Kaess
 October 2012 
 
-----------------------------
+--------------------------------------------------------
 
 AprilTags were developed by Professor Edwin Olson of the University of
 Michigan.  His Java implementation is available on this web site:
@@ -32,7 +58,7 @@ framework by Jeffrey Boyland and David Touretzky.
 See this Tekkotsu wiki article for additional links and references:
   http://wiki.tekkotsu.org/index.php/AprilTags
 
-----------------------------
+--------------------------------------------------------
 
 This C++ code was further modified by
 Michael Kaess (kaess@mit.edu) and Hordur Johannson (hordurj@mit.edu)
@@ -60,31 +86,4 @@ todo:
 - replacing arctan2 by precomputed lookup table
 - converting matrix operations to Eigen (mostly for simplifying code,
   maybe some speedup)
------------------------------
-
-----------------------environment : Ubuntu 14.04 ros-------------------
-AprilTags are 2D barcodes developed for robotics applications by Ed Olson. 
-The library detects any April tags in a given image, provides the unique 
-ID of the tag as well as its location in the image. If the camera is calibrated
-and the physical size of the tag known, also provides the relative transform 
-between tag and camera.
- 
-(1)Ubuntu dependencies:
-	sudo apt-get install subversion cmake libopencv-dev libeigen3-dev libv4l-dev
-(2)source:
-	svn co https://svn.csail.mit.edu/apriltags
-(3)compile:
-	cd apriltags
-	make
-(4)after compiling, run the example program which detects AprilTags visible
-   in laptop or webcam images and marks any tags in the live image.
-	./build/bin/apriltags_demo
-
-  -----camera coordinate (z forward, x right, y down) 
-  -----object coordinate (z forward, x left, y up)
-
-ÐèÒª¸ù¾Ý±ê¶¨Ïà»úºÍtag³ß´çÐÞ¸Ä³ÌÐò£¨examples/apriltags_demo.cpp£©ÀïµÄ²ÎÊý.
-
-²Î¿¼ÍøÖ·£º
-http://wiki.tekkotsu.org/index.php/AprilTags
-http://people.csail.mit.edu/kaess/apriltags/
+----------------------------------------------------------
