@@ -119,7 +119,7 @@ Eigen::Matrix4d TagDetection::getRelative_Camera_in_Tag(double tag_size, double 
   Eigen::Matrix4d T = getRelative_Tag_in_Camera(tag_size, fx, fy, px, py);
 
   Eigen::Matrix4d H;
-  H.topLeftCorner(3,3) = T.block(0,0,3,3).transpose();;
+  H.topLeftCorner(3,3) = T.block(0,0,3,3).transpose();
   H.col(3).head(3) = -T.block(0,0,3,3).transpose() * T.col(3).head(3);
   H.row(3) << 0,0,0,1;
 

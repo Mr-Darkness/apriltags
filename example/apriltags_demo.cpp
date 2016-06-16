@@ -123,6 +123,26 @@ void wRo_to_euler(const Eigen::Matrix3d& wRo, double& yaw, double& pitch, double
     roll  = standardRad(atan2(wRo(0,2)*s - wRo(1,2)*c, -wRo(0,1)*s + wRo(1,1)*c));
 }
 
+vector<Eigen::Matrix4d> Hi; //relative position of tag_i in coordonate tag_0
+
+void init_Hi()
+{
+    Eigen::Matrix4d H00;
+    H00 <<
+           1, 0, 0, 0,
+           0, 1, 0, 0,
+           0, 0, 1, 0,
+           0, 0, 0, 1;
+    Hi.push_back(H00);
+
+    Eigen::Matrix4d H10;
+    H10 <<
+           1, 0, 0, 0.974,
+           0, 1, 0, 0,
+           0, 0, 1, 0,
+           0, 0, 0, 1;
+    Hi.push_back(H10);
+}
 
 class Demo {
 
@@ -153,6 +173,10 @@ class Demo {
 
   Serial m_serial;
 
+  double camera_position_x;
+  double camera_position_y;
+  double camera_position_z;
+
 public:
 
   // default constructor
@@ -179,6 +203,9 @@ public:
     //m_px(m_width/2),
     //m_py(m_height/2),
     
+    camera_position_x(0.0),
+    camera_position_y(0.0),
+    camera_position_z(0.0),
 
     m_exposure(-1),
     m_gain(-1),
@@ -395,23 +422,46 @@ public:
 */
   void print_relation(vector<AprilTags::TagDetection> detections)
   {
-      Eigen::Matrix4d H0;
+      Eigen::Matrix4d T0cam;
+      bool tag_id0_exist = false;
 
-      for (int i=0; i<detections.size(); i++) {
+      for (int i=0; i<detections.size(); i++)
+      {
         if(detections[i].id == 0)
         {
-            H0 = detections[i].getRelative_Camera_in_Tag(m_tagSize, m_fx, m_fy, m_px, m_py);
-            cout<<"id= "<<detections[i].id <<" H="<<endl<<H0<<endl;
+            tag_id0_exist = true;
         }
       }
 
-      for (int i=0; i<detections.size(); i++) {
-          Eigen::Matrix4d Hi;
-          Hi = detections[i].getRelative_Tag_in_Camera(m_tagSize, m_fx, m_fy, m_px, m_py);
-          Eigen::Matrix4d H0i = H0*Hi;
-          cout<<"H"<<detections[i].id<<" in H0 "<<endl<<H0i<<endl;
+      if(tag_id0_exist)
+      {
+          for (int i=0; i<detections.size(); i++)
+          {
+            if(detections[i].id == 0)
+            {
+                T0cam = detections[i].getRelative_Camera_in_Tag(m_tagSize, m_fx, m_fy, m_px, m_py);
+                camera_position_x = T0cam(0,3);
+                camera_position_y = T0cam(1,3);
+                //cout<<"id= "<<detections[i].id <<endl<<T0cam<<endl;
+                cout<<"id= "<<detections[i].id <<" ( "<<camera_position_x<<" , "<<camera_position_y<<")"<<endl;
+                break;
+            }
+          }
       }
-
+      else
+      {
+          for (int i=0; i<detections.size(); i++)
+          {
+              Eigen::Matrix4d Ticam = detections[i].getRelative_Camera_in_Tag(m_tagSize, m_fx, m_fy, m_px, m_py);
+              int id = detections[i].id;
+              Eigen::Matrix4d P =  Hi[id] * Ticam;
+              camera_position_x = P(0,3);
+              camera_position_y = P(1,3);
+              //cout<<"id= "<<detections[i].id <<endl<<P<<endl;
+              cout<<"id"<<detections[i].id<<"  ( "<<camera_position_x<<" , "<<camera_position_y<<")"<<endl;
+              break;
+          }
+      }
   }
 
   void processImage(cv::Mat& image, cv::Mat& image_gray) {
@@ -440,7 +490,8 @@ public:
       print_detection(detections[i]);
     }
 */
-    print_relation(detections);
+    if(detections.size() > 0)
+        print_relation(detections);
 
     // show the current image including any detections
     if (m_draw) {
@@ -528,6 +579,8 @@ public:
 // here is were everything begins
 int main(int argc, char* argv[]) {
   Demo demo;
+
+  init_Hi();
 
   // process command line options
   demo.parseOptions(argc, argv);
