@@ -4,6 +4,9 @@ The library detects any April tags in a given image, provides the unique
 ID of the tag as well as its location in the image. If the camera is calibrated
 and the physical size of the tag known, also provides the relative transform 
 between tag and camera.
+
+This project tests estimation of position of camera with two tags(tag36h11,id=0 
+and tag36h11,id=1), given relative position of two tags.  
  
 (1)Ubuntu dependencies:
 	sudo apt-get install subversion cmake libopencv-dev libeigen3-dev libv4l-dev
