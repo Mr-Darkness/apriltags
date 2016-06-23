@@ -39,10 +39,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/exbot/apriltags
+CMAKE_SOURCE_DIR = ../
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/exbot/apriltags/pod-build
+CMAKE_BINARY_DIR = ./
 
 #=============================================================================
 # Targets provided globally by CMake.

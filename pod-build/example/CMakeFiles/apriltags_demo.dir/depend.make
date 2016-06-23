@@ -4,7 +4,6 @@
 example/CMakeFiles/apriltags_demo.dir/Serial.cpp.o: ../example/Serial.cpp
 example/CMakeFiles/apriltags_demo.dir/Serial.cpp.o: ../example/Serial.h
 
-example/CMakeFiles/apriltags_demo.dir/apriltags_demo.cpp.o: ../example/Serial.h
 example/CMakeFiles/apriltags_demo.dir/apriltags_demo.cpp.o: ../example/apriltags_demo.cpp
 example/CMakeFiles/apriltags_demo.dir/apriltags_demo.cpp.o: /usr/include/eigen3/Eigen/Cholesky
 example/CMakeFiles/apriltags_demo.dir/apriltags_demo.cpp.o: /usr/include/eigen3/Eigen/Core

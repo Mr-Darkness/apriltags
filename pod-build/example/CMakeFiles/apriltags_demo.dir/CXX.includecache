@@ -6,10 +6,6 @@
 
 #IncludeRegexTransform: 
 
-/home/exbot/apriltags/example/Serial.h
-string
--
-
 /home/exbot/apriltags/example/apriltags_demo.cpp
 iostream
 -
@@ -45,8 +41,6 @@ AprilTags/Tag36h11.h
 /home/exbot/apriltags/example/AprilTags/Tag36h11.h
 unistd.h
 -
-Serial.h
-/home/exbot/apriltags/example/Serial.h
 cmath
 -
 
